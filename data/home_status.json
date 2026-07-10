@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-07-11T05:08:11.006614+09:00",
+  "updated_at": "2026-07-11T06:20:21.047240+09:00",
   "battery": {
-    "soc_percent": 75,
-    "remaining_wh": 8500,
-    "remaining_kwh": 8.5
+    "soc_percent": 77,
+    "remaining_wh": 8800,
+    "remaining_kwh": 8.8
   },
   "solar": {
-    "power_w": 85
+    "power_w": 1045
   },
   "grid": {
-    "power_w": 37,
+    "power_w": 16,
     "status": "buying"
   }
 }
