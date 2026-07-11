@@ -21,6 +21,8 @@ jobs:
       - name: Fetch status
         env:
           NATURE_REMO_TOKEN: ${{ secrets.NATURE_REMO_TOKEN }}
+          SWITCHBOT_TOKEN: ${{ secrets.SWITCHBOT_TOKEN }}
+          SWITCHBOT_SECRET: ${{ secrets.SWITCHBOT_SECRET }}
         run: python scripts/fetch_home_status.py
 
       - name: Commit and push
