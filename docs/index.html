@@ -87,7 +87,7 @@ fetch('https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/data/hom
     document.getElementById('hs-floor2').textContent = d.climate.floor2.temperature + ' ℃ / ' + d.climate.floor2.humidity + '%';
     document.getElementById('hs-attic').textContent = d.climate.attic.temperature + ' ℃ / ' + d.climate.attic.humidity + '%';
 
-    document.getElementById('hs-status').textContent = d.battery.soc_percent > 10 ? 'オフグリッド運転中' : '系統から補給中';
+    document.getElementById('hs-status').textContent = (d.grid.status === 'buying' && d.grid.power_w > 50) ? '系統から補給中' : 'オフグリッド運転中';
   })
   .catch(function(e){ console.error('home status fetch failed', e); });
 </script>
