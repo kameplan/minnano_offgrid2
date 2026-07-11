@@ -67,19 +67,19 @@
 fetch('https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/data/home_status.json?_=' + Date.now())
   .then(function(res){ return res.json(); })
   .then(function(d){
-    var solarKw = (d.solar.power_w / 1000).toFixed(1);
+    var solarKw = (d.solar.power_w / 1000).toFixed(2);
     document.getElementById('hs-solar').textContent = solarKw + ' kW';
 
     document.getElementById('hs-battery').textContent = d.battery.soc_percent + ' %';
 
     var gridW = d.grid.power_w;
     var isSelling = d.grid.status === 'selling';
-    var buyKw = isSelling ? 0 : (gridW / 1000).toFixed(1);
-    var sellKw = isSelling ? (Math.abs(gridW) / 1000).toFixed(1) : 0;
+    var buyKw = isSelling ? 0 : (gridW / 1000).toFixed(2);
+    var sellKw = isSelling ? (Math.abs(gridW) / 1000).toFixed(2) : 0;
     document.getElementById('hs-buy').textContent = buyKw;
     document.getElementById('hs-sell').textContent = sellKw;
 
-    var usageKw = ((d.solar.power_w + gridW) / 1000).toFixed(1);
+    var usageKw = ((d.solar.power_w + gridW) / 1000).toFixed(2);
     document.getElementById('hs-usage').textContent = usageKw + ' kW';
 
     document.getElementById('hs-outdoor').textContent = d.climate.outdoor.temperature + ' ℃';
