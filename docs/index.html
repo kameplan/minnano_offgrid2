@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我が家の現在の状態</title>
+<style>
+  body { margin:0; padding:0; background:transparent; }
+</style>
+</head>
+<body>
+
+<div id="home-status" style="position:relative;width:100%;max-width:960px;margin:0 auto;aspect-ratio:1456/1092;background-image:url('https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/assets/house-bg.png');background-size:contain;background-repeat:no-repeat;background-position:top center;font-family:sans-serif;">
+
+  <div style="position:absolute;left:17%;top:23.5%;width:9%;">
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">発電</div>
+    <div id="hs-solar" style="font-size:1.3vw;font-weight:700;color:#2f8f3f;line-height:1.1;">-- kW</div>
+    <div style="font-size:0.6vw;color:#888;">太陽光発電</div>
+  </div>
+
+  <div style="position:absolute;left:17%;top:41.5%;width:9%;">
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">蓄電</div>
+    <div id="hs-battery" style="font-size:1.3vw;font-weight:700;color:#2f8f3f;line-height:1.1;">-- %</div>
+    <div style="font-size:0.6vw;color:#888;">残量</div>
+  </div>
+
+  <div style="position:absolute;left:17%;top:59.5%;width:9%;">
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">使用</div>
+    <div id="hs-usage" style="font-size:1.3vw;font-weight:700;color:#2f8f3f;line-height:1.1;">-- kW</div>
+    <div style="font-size:0.6vw;color:#888;">消費電力</div>
+  </div>
+
+  <div style="position:absolute;left:88%;top:35.5%;width:11%;">
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">系統</div>
+    <div style="font-size:0.7vw;color:#888;">買電 <span id="hs-buy" style="font-weight:700;">--</span> kW</div>
+    <div style="font-size:0.7vw;color:#2f8f3f;">売電 <span id="hs-sell" style="font-weight:700;">--</span> kW</div>
+  </div>
+
+  <div style="position:absolute;left:22%;top:81.5%;width:56%;font-size:0.85vw;color:#333;">
+    <span id="hs-status" style="color:#2f8f3f;font-weight:700;">オフグリッド運転中</span>
+    <span style="margin-left:8px;">太陽光と蓄電池で、暮らしのエネルギーをまかなっています。</span>
+  </div>
+
+  <div style="position:absolute;left:6.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+    <div>外気温</div>
+    <div id="hs-outdoor" style="font-size:1.0vw;font-weight:700;">-- ℃</div>
+  </div>
+
+  <div style="position:absolute;left:30.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+    <div>1F温湿度</div>
+    <div id="hs-floor1" style="font-size:1.0vw;font-weight:700;">-- ℃ / --%</div>
+  </div>
+
+  <div style="position:absolute;left:54.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+    <div>2F温湿度</div>
+    <div id="hs-floor2" style="font-size:1.0vw;font-weight:700;">-- ℃ / --%</div>
+  </div>
+
+  <div style="position:absolute;left:78.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+    <div>小屋裏温湿度</div>
+    <div id="hs-attic" style="font-size:1.0vw;font-weight:700;">-- ℃ / --%</div>
+  </div>
+
+</div>
+
+<script>
+fetch('https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/data/home_status.json?_=' + Date.now())
+  .then(function(res){ return res.json(); })
+  .then(function(d){
+    var solarKw = (d.solar.power_w / 1000).toFixed(1);
+    document.getElementById('hs-solar').textContent = solarKw + ' kW';
+
+    document.getElementById('hs-battery').textContent = d.battery.soc_percent + ' %';
+
+    var gridW = d.grid.power_w;
+    var isSelling = d.grid.status === 'selling';
+    var buyKw = isSelling ? 0 : (gridW / 1000).toFixed(1);
+    var sellKw = isSelling ? (Math.abs(gridW) / 1000).toFixed(1) : 0;
+    document.getElementById('hs-buy').textContent = buyKw;
+    document.getElementById('hs-sell').textContent = sellKw;
+
+    var usageKw = ((d.solar.power_w + gridW) / 1000).toFixed(1);
+    document.getElementById('hs-usage').textContent = usageKw + ' kW';
+
+    document.getElementById('hs-outdoor').textContent = d.climate.outdoor.temperature + ' ℃';
+    document.getElementById('hs-floor1').textContent = d.climate.floor1.temperature + ' ℃ / ' + d.climate.floor1.humidity + '%';
+    document.getElementById('hs-floor2').textContent = d.climate.floor2.temperature + ' ℃ / ' + d.climate.floor2.humidity + '%';
+    document.getElementById('hs-attic').textContent = d.climate.attic.temperature + ' ℃ / ' + d.climate.attic.humidity + '%';
+
+    document.getElementById('hs-status').textContent = d.battery.soc_percent > 10 ? 'オフグリッド運転中' : '系統から補給中';
+  })
+  .catch(function(e){ console.error('home status fetch failed', e); });
+</script>
+
+</body>
+</html>
