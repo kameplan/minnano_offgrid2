@@ -11,7 +11,8 @@
 <body>
 
 <div id="home-status" style="position:relative;width:100%;max-width:960px;margin:0 auto;aspect-ratio:1456/1092;background-image:url('https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/assets/house-bg.png');background-size:contain;background-repeat:no-repeat;background-position:top center;font-family:sans-serif;">
-
+<div id="hs-updated" style="text-align:center;font-size:12px;color:#999;margin-top:6px;">データ更新：--</div>
+  
   <div style="position:absolute;left:12%;top:23.5%;width:9%;">
     <div style="font-size:0.85vw;color:#333;font-weight:600;">発電</div>
     <div id="hs-solar" style="font-size:1.3vw;font-weight:700;color:#2f8f3f;line-height:1.1;">-- kW</div>
@@ -64,32 +65,53 @@
 </div>
 
 <script>
-fetch('https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/data/home_status.json?_=' + Date.now())
-  .then(function(res){ return res.json(); })
-  .then(function(d){
-    var solarKw = (d.solar.power_w / 1000).toFixed(2);
-    document.getElementById('hs-solar').textContent = solarKw + ' kW';
+function fetchHomeStatus() {
+  var url = 'https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/data/home_status.json?_=' + Date.now();
+  fetch(url)
+    .then(function(res){
+      if (!res.ok) {
+        throw new Error('HTTPステータスエラー: ' + res.status);
+      }
+      return res.json();
+    })
+    .then(function(d){
+      var solarKw = (d.solar.power_w / 1000).toFixed(2);
+      document.getElementById('hs-solar').textContent = solarKw + ' kW';
 
-    document.getElementById('hs-battery').textContent = d.battery.soc_percent + ' %';
+      document.getElementById('hs-battery').textContent = d.battery.soc_percent + ' %';
 
-    var gridW = d.grid.power_w;
-    var isSelling = d.grid.status === 'selling';
-    var buyKw = isSelling ? 0 : (gridW / 1000).toFixed(2);
-    var sellKw = isSelling ? (Math.abs(gridW) / 1000).toFixed(2) : 0;
-    document.getElementById('hs-buy').textContent = buyKw;
-    document.getElementById('hs-sell').textContent = sellKw;
+      var gridW = d.grid.power_w;
+      var isSelling = d.grid.status === 'selling';
+      var buyKw = isSelling ? 0 : (gridW / 1000).toFixed(2);
+      var sellKw = isSelling ? (Math.abs(gridW) / 1000).toFixed(2) : 0;
+      document.getElementById('hs-buy').textContent = buyKw;
+      document.getElementById('hs-sell').textContent = sellKw;
 
-    var usageKw = ((d.solar.power_w + gridW) / 1000).toFixed(2);
-    document.getElementById('hs-usage').textContent = usageKw + ' kW';
+      var usageKw = ((d.solar.power_w + gridW) / 1000).toFixed(2);
+      document.getElementById('hs-usage').textContent = usageKw + ' kW';
 
-    document.getElementById('hs-outdoor').textContent = d.climate.outdoor.temperature + ' ℃';
-    document.getElementById('hs-floor1').textContent = d.climate.floor1.temperature + ' ℃ / ' + d.climate.floor1.humidity + '%';
-    document.getElementById('hs-floor2').textContent = d.climate.floor2.temperature + ' ℃ / ' + d.climate.floor2.humidity + '%';
-    document.getElementById('hs-attic').textContent = d.climate.attic.temperature + ' ℃ / ' + d.climate.attic.humidity + '%';
+      document.getElementById('hs-outdoor').textContent = d.climate.outdoor.temperature + ' ℃';
+      document.getElementById('hs-floor1').textContent = d.climate.floor1.temperature + ' ℃ / ' + d.climate.floor1.humidity + '%';
+      document.getElementById('hs-floor2').textContent = d.climate.floor2.temperature + ' ℃ / ' + d.climate.floor2.humidity + '%';
+      document.getElementById('hs-attic').textContent = d.climate.attic.temperature + ' ℃ / ' + d.climate.attic.humidity + '%';
 
-    document.getElementById('hs-status').textContent = (d.grid.status === 'buying' && d.grid.power_w > 50) ? '系統から補給中' : 'オフグリッド運転中';
-  })
-  .catch(function(e){ console.error('home status fetch failed', e); });
+      document.getElementById('hs-status').textContent = (d.grid.status === 'buying' && d.grid.power_w > 50) ? '系統から補給中' : 'オフグリッド運転中';
+
+      var updatedDate = new Date(d.updated_at);
+      var hh = updatedDate.getHours();
+      var mm = updatedDate.getMinutes();
+      var mmStr = (mm < 10 ? '0' : '') + mm;
+      document.getElementById('hs-updated').textContent = 'データ更新：' + hh + '時' + mmStr + '分';
+
+      console.log('[home-status] 取得成功: ' + new Date().toLocaleTimeString('ja-JP'));
+    })
+    .catch(function(e){
+      console.error('[home-status] 取得失敗 (' + new Date().toLocaleTimeString('ja-JP') + '): ' + e.message);
+    });
+}
+
+fetchHomeStatus();
+setInterval(fetchHomeStatus, 30000);
 </script>
 
 </body>
