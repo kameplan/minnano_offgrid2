@@ -1,16 +1,12 @@
 name: Update Home Status
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'
+  repository_dispatch:
+    types: [home_status_update]
   workflow_dispatch:
 
 permissions:
   contents: write
-
-concurrency:
-  group: update-home-status
-  cancel-in-progress: false
 
 jobs:
   update:
@@ -19,21 +15,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Fetch status
+      - name: Write home status JSON
         env:
-          NATURE_REMO_TOKEN: ${{ secrets.NATURE_REMO_TOKEN }}
-          SWITCHBOT_TOKEN: ${{ secrets.SWITCHBOT_TOKEN }}
-          SWITCHBOT_SECRET: ${{ secrets.SWITCHBOT_SECRET }}
-        run: python scripts/fetch_home_status.py
+          STATUS_JSON: ${{ toJson(github.event.client_payload) }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          status = json.loads(os.environ["STATUS_JSON"])
+
+          path = Path("data/home_status.json")
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(
+              json.dumps(status, ensure_ascii=False, indent=2),
+              encoding="utf-8"
+          )
+
+          print(json.dumps(status, ensure_ascii=False, indent=2))
+          PY
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/home_status.json
-          git diff --staged --quiet || git commit -m "Update home status"
+          git diff --staged --quiet && exit 0
+          git commit -m "Update home status from Home Assistant"
+          git pull --rebase origin main
           git push
