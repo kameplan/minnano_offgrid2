@@ -5,7 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>我が家の現在の状態</title>
 <style>
-  body { margin:0; padding:0; background:transparent; }
+  body {
+    margin:0;
+    padding:0;
+    background:transparent;
+  }
+
+  @media (max-width: 768px) {
+
+    #home-status{
+      width:100%;
+      max-width:100%;
+    }
+
+    #home-status div{
+      font-size:3vw !important;
+    }
+
+    #hs-solar,
+    #hs-battery,
+    #hs-usage,
+    #hs-buy,
+    #hs-sell,
+    #hs-outdoor,
+    #hs-floor1,
+    #hs-floor2,
+    #hs-attic{
+      font-size:4vw !important;
+    }
+  }
 </style>
 </head>
 <body>
