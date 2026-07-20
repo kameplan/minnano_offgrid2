@@ -3,14 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>我が家の現在の状態</title>
+
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
     padding: 0;
     background: transparent;
-    font-family: sans-serif;
+    color: #333;
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      "Hiragino Kaku Gothic ProN",
+      "Yu Gothic",
+      Meiryo,
+      sans-serif;
   }
+
+  /* =========================
+     PC・タブレット版
+     ========================= */
+
+  #home-status {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    aspect-ratio: 1456 / 1092;
+    background-image:
+      url("https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/assets/house-bg.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top center;
+  }
+
+  #hs-updated {
+    margin-top: 6px;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* =========================
+     スマホ版
+     ========================= */
 
   #mobile-status {
     display: none;
@@ -23,189 +65,697 @@
 
     #mobile-status {
       display: block;
-      box-sizing: border-box;
       width: 100%;
       max-width: 520px;
       margin: 0 auto;
-      padding: 14px;
-      background: #f4f6f2;
+      padding-bottom: 18px;
+      background: #f2f5f0;
+    }
+
+    .mobile-header {
+      padding: 20px 16px 14px;
+      text-align: center;
     }
 
     .mobile-title {
-      margin-bottom: 4px;
-      color: #374337;
-      font-size: 22px;
+      margin: 0;
+      color: #3c473c;
+      font-size: 23px;
       font-weight: 700;
-      text-align: center;
+      letter-spacing: 0.04em;
     }
 
     .mobile-subtitle {
-      margin-bottom: 12px;
-      color: #777;
+      margin: 7px 0 0;
+      color: #778077;
       font-size: 12px;
-      text-align: center;
+      line-height: 1.6;
     }
 
-    .mobile-house {
-      width: 100%;
-      margin-bottom: 12px;
-      border-radius: 16px;
-      display: block;
+    .mobile-hero {
+      width: calc(100% - 24px);
+      height: 230px;
+      margin: 0 12px 14px;
+      overflow: hidden;
+      border-radius: 18px;
+      background-image:
+        url("https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/assets/house-bg.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center 54%;
+      box-shadow: 0 5px 18px rgba(40, 55, 40, 0.12);
+    }
+
+    .mobile-status-bar {
+      margin: 0 12px 12px;
+      padding: 12px 14px;
+      border: 1px solid rgba(65, 125, 73, 0.15);
+      border-radius: 14px;
+      background: #fff;
+      color: #2f7e42;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(40, 55, 40, 0.07);
+    }
+
+    .mobile-section-title {
+      margin: 18px 16px 9px;
+      color: #576257;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .mobile-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
+      padding: 0 12px;
     }
 
     .mobile-card {
-      box-sizing: border-box;
-      min-height: 88px;
-      padding: 12px;
+      min-width: 0;
+      min-height: 96px;
+      padding: 13px;
+      border: 1px solid rgba(60, 100, 65, 0.1);
+      border-radius: 15px;
       background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+      box-shadow: 0 3px 12px rgba(40, 55, 40, 0.07);
+    }
+
+    .mobile-card-wide {
+      grid-column: 1 / -1;
+      min-height: auto;
     }
 
     .mobile-label {
       display: block;
-      margin-bottom: 7px;
-      color: #777;
+      margin-bottom: 8px;
+      color: #727a72;
       font-size: 12px;
+      line-height: 1.4;
     }
 
     .mobile-value {
       display: block;
-      color: #2f7b42;
+      overflow-wrap: anywhere;
+      color: #2f7e42;
       font-size: 21px;
-      font-weight: 700;
+      font-weight: 750;
       line-height: 1.25;
     }
 
-    .mobile-status-bar {
-      margin-top: 10px;
-      padding: 11px;
-      background: #fff;
-      border-radius: 14px;
-      color: #2f7b42;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: center;
+    .mobile-value-small {
+      font-size: 18px;
     }
 
     #mobile-updated {
-      margin-top: 10px;
-      color: #888;
+      margin-top: 13px;
+      padding: 0 12px;
+      color: #8b918b;
       font-size: 12px;
+      text-align: center;
+    }
+
+    #mobile-error {
+      display: none;
+      margin: 12px;
+      padding: 11px;
+      border-radius: 12px;
+      background: #fff1f1;
+      color: #b34b4b;
+      font-size: 12px;
+      line-height: 1.6;
       text-align: center;
     }
   }
 </style>
 </head>
+
 <body>
 
-<div id="home-status" style="position:relative;width:100%;max-width:960px;margin:0 auto;aspect-ratio:1456/1092;background-image:url('https://raw.githubusercontent.com/kameplan/minnano_offgrid2/main/assets/house-bg.png');background-size:contain;background-repeat:no-repeat;background-position:top center;font-family:sans-serif;">
-<div id="hs-updated" style="text-align:center;font-size:12px;color:#999;margin-top:6px;">データ更新：--</div>
-  
+<!-- =========================
+     PC・タブレット版
+     ========================= -->
+
+<div id="home-status">
+
+  <div id="hs-updated">
+    データ更新：--
+  </div>
+
   <div style="position:absolute;left:12%;top:23.5%;width:9%;">
-    <div style="font-size:0.85vw;color:#333;font-weight:600;">発電</div>
-    <div id="hs-solar" style="font-size:1.3vw;font-weight:720;color:#2f8f3f;line-height:1.1;">-- kW</div>
-    <div style="font-size:0.6vw;color:#888;">太陽光発電</div>
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">
+      発電
+    </div>
+
+    <div
+      id="hs-solar"
+      style="font-size:1.3vw;font-weight:720;color:#2f8f3f;line-height:1.1;"
+    >
+      -- kW
+    </div>
+
+    <div style="font-size:0.6vw;color:#888;">
+      太陽光発電
+    </div>
   </div>
 
   <div style="position:absolute;left:12%;top:41.5%;width:9%;">
-    <div style="font-size:0.85vw;color:#333;font-weight:600;">蓄電</div>
-    <div id="hs-battery" style="font-size:1.3vw;font-weight:720;color:#2f8f3f;line-height:1.1;">-- %</div>
-    <div style="font-size:0.6vw;color:#888;">残量</div>
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">
+      蓄電
+    </div>
+
+    <div
+      id="hs-battery"
+      style="font-size:1.3vw;font-weight:720;color:#2f8f3f;line-height:1.1;"
+    >
+      -- %
+    </div>
+
+    <div style="font-size:0.6vw;color:#888;">
+      残量
+    </div>
   </div>
 
   <div style="position:absolute;left:12%;top:59.5%;width:9%;">
-    <div style="font-size:0.85vw;color:#333;font-weight:600;">消費電力</div>
-    <div id="hs-usage" style="font-size:1.3vw;font-weight:720;color:#2f8f3f;line-height:1.1;">-- kW</div>
-    <div style="font-size:0.6vw;color:#888;">消費電力</div>
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">
+      消費電力
+    </div>
+
+    <div
+      id="hs-usage"
+      style="font-size:1.3vw;font-weight:720;color:#2f8f3f;line-height:1.1;"
+    >
+      -- kW
+    </div>
+
+    <div style="font-size:0.6vw;color:#888;">
+      消費電力
+    </div>
   </div>
 
   <div style="position:absolute;left:90%;top:36.5%;width:11%;">
-    <div style="font-size:0.85vw;color:#333;font-weight:600;">電力系統</div>
-    <div style="font-size:1.0vw;color:#888;">買電 <span id="hs-buy" style="font-weight:700;">--</span> kW</div>
-    <div style="font-size:1.0vw;color:#2f8f3f;">売電 <span id="hs-sell" style="font-weight:700;">--</span> kW</div>
+    <div style="font-size:0.85vw;color:#333;font-weight:600;">
+      電力系統
+    </div>
+
+    <div style="font-size:1.0vw;color:#888;">
+      買電
+      <span id="hs-buy" style="font-weight:700;">--</span>
+      kW
+    </div>
+
+    <div style="font-size:1.0vw;color:#2f8f3f;">
+      売電
+      <span id="hs-sell" style="font-weight:700;">--</span>
+      kW
+    </div>
   </div>
 
-  <div style="position:absolute;left:27%;top:83%;width:56%;font-size:0.85vw;color:#333;">
-    <span id="hs-status" style="color:#2f8f3f;font-weight:700;">オフグリッド運転中</span>
-    <span style="margin-left:8px;">太陽光と蓄電池で、暮らしのエネルギーをまかなっています。</span>
+  <div
+    style="position:absolute;left:27%;top:83%;width:56%;font-size:0.85vw;color:#333;"
+  >
+    <span
+      id="hs-status"
+      style="color:#2f8f3f;font-weight:700;"
+    >
+      状態を取得中
+    </span>
+
+    <span style="margin-left:8px;">
+      太陽光と蓄電池で、暮らしのエネルギーをまかなっています。
+    </span>
   </div>
 
-  <div style="position:absolute;left:11.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+  <div
+    style="position:absolute;left:11.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;"
+  >
     <div>外気温</div>
-    <div id="hs-outdoor" style="font-size:1.3vw;font-weight:700;">-- ℃</div>
+
+    <div
+      id="hs-outdoor"
+      style="font-size:1.3vw;font-weight:700;"
+    >
+      -- ℃
+    </div>
   </div>
 
-  <div style="position:absolute;left:32.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+  <div
+    style="position:absolute;left:32.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;"
+  >
     <div>1F温湿度</div>
-    <div id="hs-floor1" style="font-size:1.3vw;font-weight:700;">-- ℃ / --%</div>
+
+    <div
+      id="hs-floor1"
+      style="font-size:1.3vw;font-weight:700;"
+    >
+      -- ℃ / --%
+    </div>
   </div>
 
-  <div style="position:absolute;left:56.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+  <div
+    style="position:absolute;left:56.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;"
+  >
     <div>2F温湿度</div>
-    <div id="hs-floor2" style="font-size:1.3vw;font-weight:700;">-- ℃ / --%</div>
+
+    <div
+      id="hs-floor2"
+      style="font-size:1.3vw;font-weight:700;"
+    >
+      -- ℃ / --%
+    </div>
   </div>
 
-  <div style="position:absolute;left:80.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;">
+  <div
+    style="position:absolute;left:80.5%;top:91.5%;width:20%;font-size:0.75vw;color:#333;"
+  >
     <div>小屋裏温湿度</div>
-    <div id="hs-attic" style="font-size:1.3vw;font-weight:700;">-- ℃ / --%</div>
+
+    <div
+      id="hs-attic"
+      style="font-size:1.3vw;font-weight:700;"
+    >
+      -- ℃ / --%
+    </div>
   </div>
 
 </div>
 
+
+<!-- =========================
+     スマホ版
+     ========================= -->
+
+<div id="mobile-status">
+
+  <header class="mobile-header">
+    <h1 class="mobile-title">
+      我が家の現在の状態
+    </h1>
+
+    <p class="mobile-subtitle">
+      自然のエネルギーを活かし、たくわえ、上手に使う暮らし。
+    </p>
+  </header>
+
+  <div
+    class="mobile-hero"
+    role="img"
+    aria-label="オフグリッドな我が家"
+  ></div>
+
+  <div
+    id="mobile-status-text"
+    class="mobile-status-bar"
+  >
+    状態を取得中
+  </div>
+
+  <div id="mobile-error">
+    データを取得できませんでした。しばらくしてから再度ご覧ください。
+  </div>
+
+  <div class="mobile-section-title">
+    現在のエネルギー
+  </div>
+
+  <div class="mobile-grid">
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        太陽光発電
+      </span>
+
+      <strong
+        id="mobile-solar"
+        class="mobile-value"
+      >
+        -- kW
+      </strong>
+    </div>
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        蓄電池残量
+      </span>
+
+      <strong
+        id="mobile-battery"
+        class="mobile-value"
+      >
+        -- %
+      </strong>
+    </div>
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        概算消費電力
+      </span>
+
+      <strong
+        id="mobile-usage"
+        class="mobile-value"
+      >
+        -- kW
+      </strong>
+    </div>
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        電力系統
+      </span>
+
+      <strong
+        id="mobile-grid-value"
+        class="mobile-value mobile-value-small"
+      >
+        --
+      </strong>
+    </div>
+
+  </div>
+
+  <div class="mobile-section-title">
+    室内外の温熱環境
+  </div>
+
+  <div class="mobile-grid">
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        外気温
+      </span>
+
+      <strong
+        id="mobile-outdoor"
+        class="mobile-value"
+      >
+        -- ℃
+      </strong>
+    </div>
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        1F温湿度
+      </span>
+
+      <strong
+        id="mobile-floor1"
+        class="mobile-value mobile-value-small"
+      >
+        --
+      </strong>
+    </div>
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        2F温湿度
+      </span>
+
+      <strong
+        id="mobile-floor2"
+        class="mobile-value mobile-value-small"
+      >
+        --
+      </strong>
+    </div>
+
+    <div class="mobile-card">
+      <span class="mobile-label">
+        小屋裏温湿度
+      </span>
+
+      <strong
+        id="mobile-attic"
+        class="mobile-value mobile-value-small"
+      >
+        --
+      </strong>
+    </div>
+
+  </div>
+
+  <div id="mobile-updated">
+    データ更新：--
+  </div>
+
+</div>
+
+
 <script>
+function setText(id, value) {
+  var element = document.getElementById(id);
+
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function formatNumber(value, digits) {
+  var number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "--";
+  }
+
+  return number.toFixed(digits);
+}
+
 function fetchHomeStatus() {
-  var url = 'data/home_status.json?_=' + Date.now();
-  fetch(url)
-    .then(function(res){
-      if (!res.ok) {
-        throw new Error('HTTPステータスエラー: ' + res.status);
+  var url = "data/home_status.json?_=" + Date.now();
+
+  fetch(url, {
+    cache: "no-store"
+  })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error(
+          "HTTPステータスエラー: " + response.status
+        );
       }
-      return res.json();
+
+      return response.json();
     })
-    .then(function(d){
-      var solarKw = (Math.abs(d.solar.power_w) / 1000).toFixed(2);
-      document.getElementById('hs-solar').textContent = solarKw + ' kW';
 
-      document.getElementById('hs-battery').textContent = d.battery.soc_percent + ' %';
+    .then(function(data) {
+      var solarW =
+        Number(data?.solar?.power_w) || 0;
 
-      var gridW = d.grid.power_w;
-      var isSelling = d.grid.status === 'selling';
-      var buyKw = isSelling ? 0 : (gridW / 1000).toFixed(2);
-      var sellKw = isSelling ? (Math.abs(gridW) / 1000).toFixed(2) : 0;
-      document.getElementById('hs-buy').textContent = buyKw;
-      document.getElementById('hs-sell').textContent = sellKw;
+      var batteryPercent =
+        Number(data?.battery?.soc_percent) || 0;
 
-      var usageKw = ((d.solar.power_w + gridW) / 1000).toFixed(2);
-      document.getElementById('hs-usage').textContent = usageKw + ' kW';
+      var gridW =
+        Number(data?.grid?.power_w) || 0;
 
-      document.getElementById('hs-outdoor').textContent = d.climate.outdoor.temperature + ' ℃';
-      document.getElementById('hs-floor1').textContent = d.climate.floor1.temperature + ' ℃ / ' + d.climate.floor1.humidity + '%';
-      document.getElementById('hs-floor2').textContent = d.climate.floor2.temperature + ' ℃ / ' + d.climate.floor2.humidity + '%';
-      document.getElementById('hs-attic').textContent = d.climate.attic.temperature + ' ℃ / ' + d.climate.attic.humidity + '%';
+      var isSelling =
+        data?.grid?.status === "selling" ||
+        gridW < 0;
 
-      document.getElementById('hs-status').textContent = (d.grid.status === 'buying' && d.grid.power_w > 50) ? '系統から補給中' : 'オフグリッド運転中';
+      var solarKw =
+        Math.abs(solarW) / 1000;
 
-      var updatedDate = new Date(d.updated_at);
-      var hh = updatedDate.getHours();
-      var mm = updatedDate.getMinutes();
-      var mmStr = (mm < 10 ? '0' : '') + mm;
-      document.getElementById('hs-updated').textContent = 'データ更新：' + hh + '時' + mmStr + '分';
+      var buyKw =
+        isSelling
+          ? 0
+          : Math.max(gridW, 0) / 1000;
 
-      console.log('[home-status] 取得成功: ' + new Date().toLocaleTimeString('ja-JP'));
+      var sellKw =
+        isSelling
+          ? Math.abs(gridW) / 1000
+          : 0;
+
+      /*
+        概算消費電力
+        発電＋買電－売電
+      */
+      var usageKw =
+        Math.max(
+          0,
+          (solarW + gridW) / 1000
+        );
+
+      var statusText =
+        !isSelling && gridW > 50
+          ? "系統から補給中"
+          : "オフグリッド運転中";
+
+      /* PC表示 */
+
+      setText(
+        "hs-solar",
+        formatNumber(solarKw, 2) + " kW"
+      );
+
+      setText(
+        "hs-battery",
+        formatNumber(batteryPercent, 0) + " %"
+      );
+
+      setText(
+        "hs-usage",
+        formatNumber(usageKw, 2) + " kW"
+      );
+
+      setText(
+        "hs-buy",
+        formatNumber(buyKw, 2)
+      );
+
+      setText(
+        "hs-sell",
+        formatNumber(sellKw, 2)
+      );
+
+      setText(
+        "hs-status",
+        statusText
+      );
+
+      /* スマホ表示 */
+
+      setText(
+        "mobile-solar",
+        formatNumber(solarKw, 2) + " kW"
+      );
+
+      setText(
+        "mobile-battery",
+        formatNumber(batteryPercent, 0) + " %"
+      );
+
+      setText(
+        "mobile-usage",
+        formatNumber(usageKw, 2) + " kW"
+      );
+
+      setText(
+        "mobile-grid-value",
+        isSelling
+          ? "売電 " + formatNumber(sellKw, 2) + " kW"
+          : "買電 " + formatNumber(buyKw, 2) + " kW"
+      );
+
+      setText(
+        "mobile-status-text",
+        statusText
+      );
+
+      /* 温湿度 */
+
+      var outdoor =
+        data?.climate?.outdoor || {};
+
+      var floor1 =
+        data?.climate?.floor1 || {};
+
+      var floor2 =
+        data?.climate?.floor2 || {};
+
+      var attic =
+        data?.climate?.attic || {};
+
+      var outdoorText =
+        formatNumber(outdoor.temperature, 1) +
+        " ℃";
+
+      var floor1Text =
+        formatNumber(floor1.temperature, 1) +
+        " ℃ / " +
+        formatNumber(floor1.humidity, 0) +
+        "%";
+
+      var floor2Text =
+        formatNumber(floor2.temperature, 1) +
+        " ℃ / " +
+        formatNumber(floor2.humidity, 0) +
+        "%";
+
+      var atticText =
+        formatNumber(attic.temperature, 1) +
+        " ℃ / " +
+        formatNumber(attic.humidity, 0) +
+        "%";
+
+      setText("hs-outdoor", outdoorText);
+      setText("hs-floor1", floor1Text);
+      setText("hs-floor2", floor2Text);
+      setText("hs-attic", atticText);
+
+      setText("mobile-outdoor", outdoorText);
+      setText("mobile-floor1", floor1Text);
+      setText("mobile-floor2", floor2Text);
+      setText("mobile-attic", atticText);
+
+      /* 更新時刻 */
+
+      var updatedDate =
+        new Date(data.updated_at);
+
+      var updatedText =
+        "データ更新：--";
+
+      if (!Number.isNaN(updatedDate.getTime())) {
+        var hours =
+          updatedDate.getHours();
+
+        var minutes =
+          String(
+            updatedDate.getMinutes()
+          ).padStart(2, "0");
+
+        updatedText =
+          "データ更新：" +
+          hours +
+          "時" +
+          minutes +
+          "分";
+      }
+
+      setText(
+        "hs-updated",
+        updatedText
+      );
+
+      setText(
+        "mobile-updated",
+        updatedText
+      );
+
+      var mobileError =
+        document.getElementById("mobile-error");
+
+      if (mobileError) {
+        mobileError.style.display = "none";
+      }
+
+      console.log(
+        "[home-status] 取得成功:",
+        new Date().toLocaleTimeString("ja-JP")
+      );
     })
-    .catch(function(e){
-      console.error('[home-status] 取得失敗 (' + new Date().toLocaleTimeString('ja-JP') + '): ' + e.message);
+
+    .catch(function(error) {
+      console.error(
+        "[home-status] 取得失敗:",
+        error
+      );
+
+      var mobileError =
+        document.getElementById("mobile-error");
+
+      if (mobileError) {
+        mobileError.style.display = "block";
+      }
     });
 }
 
 fetchHomeStatus();
+
+/*
+  表示ページ側は30秒ごとに最新JSONを確認します。
+  Home Assistantからの送信間隔とは別です。
+*/
 setInterval(fetchHomeStatus, 30000);
 </script>
 
