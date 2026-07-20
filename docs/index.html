@@ -849,6 +849,32 @@ fetchHomeStatus();
 */
 setInterval(fetchHomeStatus, 30000);
 </script>
+<script>
+function sendIframeHeight() {
+  const height = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight
+  );
 
+  window.parent.postMessage(
+    {
+      type: "kameplan-iframe-height",
+      height: height
+    },
+    "https://www.kameplan.com"
+  );
+}
+
+window.addEventListener("load", sendIframeHeight);
+window.addEventListener("resize", sendIframeHeight);
+
+if ("ResizeObserver" in window) {
+  const observer = new ResizeObserver(sendIframeHeight);
+  observer.observe(document.body);
+}
+
+setTimeout(sendIframeHeight, 500);
+setTimeout(sendIframeHeight, 1500);
+</script>
 </body>
 </html>
