@@ -26,7 +26,7 @@ jobs:
 
           status = json.loads(os.environ["STATUS_JSON"])
 
-          path = Path("data/home_status.json")
+          path = Path("docs/data/home_status.json")
           path.parent.mkdir(parents=True, exist_ok=True)
           path.write_text(
               json.dumps(status, ensure_ascii=False, indent=2),
