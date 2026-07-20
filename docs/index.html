@@ -6,32 +6,99 @@
 <title>我が家の現在の状態</title>
 <style>
   body {
-    margin:0;
-    padding:0;
-    background:transparent;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: sans-serif;
   }
 
-  @media (max-width: 768px) {
+  #mobile-status {
+    display: none;
+  }
 
-    #home-status{
-      width:100%;
-      max-width:100%;
+  @media (max-width: 700px) {
+    #home-status {
+      display: none;
     }
 
-    #home-status div{
-      font-size:3vw !important;
+    #mobile-status {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 14px;
+      background: #f4f6f2;
     }
 
-    #hs-solar,
-    #hs-battery,
-    #hs-usage,
-    #hs-buy,
-    #hs-sell,
-    #hs-outdoor,
-    #hs-floor1,
-    #hs-floor2,
-    #hs-attic{
-      font-size:4vw !important;
+    .mobile-title {
+      margin-bottom: 4px;
+      color: #374337;
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .mobile-subtitle {
+      margin-bottom: 12px;
+      color: #777;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .mobile-house {
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .mobile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .mobile-card {
+      box-sizing: border-box;
+      min-height: 88px;
+      padding: 12px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    }
+
+    .mobile-label {
+      display: block;
+      margin-bottom: 7px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .mobile-value {
+      display: block;
+      color: #2f7b42;
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .mobile-status-bar {
+      margin-top: 10px;
+      padding: 11px;
+      background: #fff;
+      border-radius: 14px;
+      color: #2f7b42;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #mobile-updated {
+      margin-top: 10px;
+      color: #888;
+      font-size: 12px;
+      text-align: center;
     }
   }
 </style>
