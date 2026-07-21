@@ -143,6 +143,10 @@ def main():
     switchbot_secret = get_env("SWITCHBOT_SECRET")
 
     appliances = fetch_nature_appliances(nature_token)
+    
+    print("===== Nature API raw data =====")
+    print(json.dumps(appliances, ensure_ascii=False, indent=2))
+    
     nature_status = parse_nature_status(appliances)
     switchbot_status = parse_switchbot_status(switchbot_token, switchbot_secret)
 
