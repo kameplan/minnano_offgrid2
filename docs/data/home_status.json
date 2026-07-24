@@ -10,27 +10,27 @@
       "temperature": 27.7
     },
     "floor1": {
-      "humidity": 59,
+      "humidity": 58,
       "label": "1F",
-      "temperature": 28.2
+      "temperature": 28.1
     },
     "floor2": {
-      "humidity": 53,
+      "humidity": 52,
       "label": "2F",
       "temperature": 28.2
     },
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 33.6
+      "temperature": 33.3
     }
   },
   "grid": {
-    "power_w": 51,
+    "power_w": 49,
     "status": "buying"
   },
   "solar": {
-    "power_w": 627
+    "power_w": 558
   },
-  "updated_at": "2026-07-24T16:44:00.350003+09:00"
+  "updated_at": "2026-07-24T16:45:00.349319+09:00"
 }
