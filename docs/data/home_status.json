@@ -12,7 +12,7 @@
     "floor1": {
       "humidity": 57,
       "label": "1F",
-      "temperature": 25.9
+      "temperature": 25.8
     },
     "floor2": {
       "humidity": 50,
@@ -30,7 +30,7 @@
     "status": "buying"
   },
   "solar": {
-    "power_w": 998
+    "power_w": 1058
   },
-  "updated_at": "2026-08-09T12:03:00.409501+09:00"
+  "updated_at": "2026-08-09T12:04:00.409823+09:00"
 }
