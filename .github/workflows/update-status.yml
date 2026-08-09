@@ -3,10 +3,13 @@ name: Update Home Status
 on:
   repository_dispatch:
     types: [home_status_update]
-  workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: update-home-status
+  cancel-in-progress: true
 
 jobs:
   update:
@@ -25,6 +28,9 @@ jobs:
           from pathlib import Path
 
           status = json.loads(os.environ["STATUS_JSON"])
+
+          if not status:
+              raise SystemExit("ERROR: client_payload is empty")
 
           path = Path("docs/data/home_status.json")
           path.parent.mkdir(parents=True, exist_ok=True)
