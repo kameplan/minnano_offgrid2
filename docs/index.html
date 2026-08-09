@@ -228,7 +228,7 @@
     <div class="mobile-grid">
       <div class="mobile-card"><span class="mobile-label">太陽光発電</span><strong id="mobile-solar" class="mobile-value">-- kW</strong></div>
       <div class="mobile-card"><span class="mobile-label">蓄電池残量</span><strong id="mobile-battery" class="mobile-value">-- %</strong></div>
-      <div class="mobile-card"><span class="mobile-label">概算消費電力</span><strong id="mobile-usage" class="mobile-value">-- kW</strong></div>
+      <div class="mobile-card"><span class="mobile-label">消費電力</span><strong id="mobile-usage" class="mobile-value">-- kW</strong></div>
       <div class="mobile-card"><span class="mobile-label">電力系統</span><strong id="mobile-grid-value" class="mobile-value mobile-value-small">--</strong></div>
     </div>
 
@@ -268,15 +268,20 @@
           return response.json();
         })
         .then(function(data) {
-          const solarW = Number(data?.solar?.power_w) || 0;
-          const batteryPercent = Number(data?.battery?.soc_percent) || 0;
-          const gridW = Number(data?.grid?.power_w) || 0;
-          const isSelling = data?.grid?.status === "selling" || gridW < 0;
-          const solarKw = Math.abs(solarW) / 1000;
-          const buyKw = isSelling ? 0 : Math.max(gridW, 0) / 1000;
-          const sellKw = isSelling ? Math.abs(gridW) / 1000 : 0;
-          const usageKw = Math.max(0, (solarW + gridW) / 1000);
-          const statusText = !isSelling && gridW > 50 ? "系統から補給中" : "オフグリッド運転中";
+         　const solarW = Number(data?.solar?.power_w) || 0;
+　　　　　　const batteryPercent = Number(data?.battery?.soc_percent) || 0;
+　　　　　　const gridW = Number(data?.grid?.power_w) || 0;
+　　　　　　const homeW = Number(data?.home?.power_w) || 0;
+
+　　　　　　const isSelling = data?.grid?.status === "selling" || gridW < 0;
+　　　　　　const solarKw = Math.abs(solarW) / 1000;
+　　　　　　const buyKw = isSelling ? 0 : Math.max(gridW, 0) / 1000;
+　　　　　　const sellKw = isSelling ? Math.abs(gridW) / 1000 : 0;
+　　　　　　const usageKw = Math.max(0, homeW / 1000);
+
+　　　　　　const statusText = !isSelling && gridW > 50
+  　　　　　　? "系統から補給中"
+  　　　　　　: "オフグリッド運転中";
 
           setText("hs-solar", formatNumber(solarKw, 2) + " kW");
           setText("hs-battery", formatNumber(batteryPercent, 0) + " %");
