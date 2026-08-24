@@ -10,7 +10,7 @@
       "temperature": 26.8
     },
     "floor1": {
-      "humidity": 61,
+      "humidity": 60,
       "label": "1F",
       "temperature": 27.3
     },
@@ -22,7 +22,7 @@
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 32.8
+      "temperature": 33
     }
   },
   "grid": {
@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 922
+    "power_w": 932
   },
   "solar": {
-    "power_w": 922
+    "power_w": 932
   },
-  "updated_at": "2026-08-24T12:08:00.472173+09:00"
+  "updated_at": "2026-08-24T12:09:00.491976+09:00"
 }
