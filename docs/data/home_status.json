@@ -1,7 +1,7 @@
 {
   "battery": {
     "remaining_kwh": 0,
-    "soc_percent": 77
+    "soc_percent": 78
   },
   "climate": {
     "attic": {
@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 448
+    "power_w": 444
   },
   "solar": {
-    "power_w": 1993
+    "power_w": 2583
   },
-  "updated_at": "2026-08-30T14:16:00.672073+09:00"
+  "updated_at": "2026-08-30T14:17:00.479566+09:00"
 }
