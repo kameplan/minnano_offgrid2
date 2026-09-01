@@ -17,7 +17,7 @@
     "floor2": {
       "humidity": 60,
       "label": "2F",
-      "temperature": 28.6
+      "temperature": 28.7
     },
     "outdoor": {
       "humidity": 0,
@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 1368
+    "power_w": 1375
   },
   "solar": {
-    "power_w": 1504
+    "power_w": 1481
   },
-  "updated_at": "2026-09-01T10:58:00.541239+09:00"
+  "updated_at": "2026-09-01T10:59:00.488121+09:00"
 }
