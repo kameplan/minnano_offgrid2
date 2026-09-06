@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 241
-  },
-  "solar": {
     "power_w": 295
   },
-  "updated_at": "2026-09-06T09:54:00.537774+09:00"
+  "solar": {
+    "power_w": 343
+  },
+  "updated_at": "2026-09-06T09:55:00.480506+09:00"
 }
