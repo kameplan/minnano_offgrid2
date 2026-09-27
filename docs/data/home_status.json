@@ -15,25 +15,25 @@
       "temperature": 25.3
     },
     "floor2": {
-      "humidity": 59,
+      "humidity": 60,
       "label": "2F",
       "temperature": 25.8
     },
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 21.5
+      "temperature": 21.7
     }
   },
   "grid": {
-    "power_w": 10,
+    "power_w": 13,
     "status": "buying"
   },
   "home": {
-    "power_w": 332
+    "power_w": 420
   },
   "solar": {
-    "power_w": 1238
+    "power_w": 1281
   },
-  "updated_at": "2026-09-27T13:03:00.451177+09:00"
+  "updated_at": "2026-09-27T13:04:00.451114+09:00"
 }
