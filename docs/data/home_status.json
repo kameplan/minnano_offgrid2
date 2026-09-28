@@ -26,14 +26,14 @@
     }
   },
   "grid": {
-    "power_w": 535,
+    "power_w": 189,
     "status": "buying"
   },
   "home": {
-    "power_w": 640
+    "power_w": 286
   },
   "solar": {
-    "power_w": 105
+    "power_w": 97
   },
-  "updated_at": "2026-09-29T07:31:00.451637+09:00"
+  "updated_at": "2026-09-29T07:32:00.451662+09:00"
 }
