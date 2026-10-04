@@ -5,9 +5,9 @@
   },
   "climate": {
     "attic": {
-      "humidity": 0,
+      "humidity": 54,
       "label": "小屋裏",
-      "temperature": 0
+      "temperature": 25.1
     },
     "floor1": {
       "humidity": 54,
@@ -26,14 +26,14 @@
     }
   },
   "grid": {
-    "power_w": 12,
+    "power_w": 13,
     "status": "buying"
   },
   "home": {
-    "power_w": 496
+    "power_w": 584
   },
   "solar": {
-    "power_w": 1213
+    "power_w": 1244
   },
-  "updated_at": "2026-10-04T13:34:00.450604+09:00"
+  "updated_at": "2026-10-04T13:35:00.451565+09:00"
 }
