@@ -1,13 +1,13 @@
 {
   "battery": {
     "remaining_kwh": 0,
-    "soc_percent": 74
+    "soc_percent": 75
   },
   "climate": {
     "attic": {
       "humidity": 58,
       "label": "小屋裏",
-      "temperature": 24.8
+      "temperature": 24.9
     },
     "floor1": {
       "humidity": 57,
@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 453
+    "power_w": 447
   },
   "solar": {
-    "power_w": 1408
+    "power_w": 1391
   },
-  "updated_at": "2026-10-05T13:04:00.450562+09:00"
+  "updated_at": "2026-10-05T13:05:00.450244+09:00"
 }
