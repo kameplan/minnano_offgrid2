@@ -12,12 +12,12 @@
     "floor1": {
       "humidity": 58,
       "label": "1F",
-      "temperature": 25.1
+      "temperature": 25.2
     },
     "floor2": {
       "humidity": 54,
       "label": "2F",
-      "temperature": 25.6
+      "temperature": 25.5
     },
     "outdoor": {
       "humidity": 0,
@@ -26,14 +26,14 @@
     }
   },
   "grid": {
-    "power_w": 11,
+    "power_w": 17,
     "status": "buying"
   },
   "home": {
-    "power_w": 379
+    "power_w": 631
   },
   "solar": {
-    "power_w": 673
+    "power_w": 653
   },
-  "updated_at": "2026-10-05T14:33:00.449971+09:00"
+  "updated_at": "2026-10-05T14:34:00.451970+09:00"
 }
