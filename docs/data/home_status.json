@@ -10,7 +10,7 @@
       "temperature": 25.1
     },
     "floor1": {
-      "humidity": 47,
+      "humidity": 46,
       "label": "1F",
       "temperature": 25
     },
@@ -22,7 +22,7 @@
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 20.2
+      "temperature": 20
     }
   },
   "grid": {
@@ -35,5 +35,5 @@
   "solar": {
     "power_w": 0
   },
-  "updated_at": "2026-10-07T23:22:00.452066+09:00"
+  "updated_at": "2026-10-07T23:24:00.450650+09:00"
 }
