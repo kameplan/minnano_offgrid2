@@ -1,7 +1,7 @@
 {
   "battery": {
     "remaining_kwh": 0,
-    "soc_percent": 92
+    "soc_percent": 91
   },
   "climate": {
     "attic": {
@@ -12,12 +12,12 @@
     "floor1": {
       "humidity": 47,
       "label": "1F",
-      "temperature": 27.3
+      "temperature": 27.2
     },
     "floor2": {
       "humidity": 49,
       "label": "2F",
-      "temperature": 28.1
+      "temperature": 28.2
     },
     "outdoor": {
       "humidity": 0,
@@ -35,5 +35,5 @@
   "solar": {
     "power_w": 0
   },
-  "updated_at": "2026-10-11T19:43:00.449937+09:00"
+  "updated_at": "2026-10-11T19:44:00.450833+09:00"
 }
