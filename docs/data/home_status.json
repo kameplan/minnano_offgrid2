@@ -7,10 +7,10 @@
     "attic": {
       "humidity": 58,
       "label": "小屋裏",
-      "temperature": 26.1
+      "temperature": 26
     },
     "floor1": {
-      "humidity": 61,
+      "humidity": 60,
       "label": "1F",
       "temperature": 25.3
     },
@@ -22,18 +22,18 @@
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 18.8
+      "temperature": 18.6
     }
   },
   "grid": {
-    "power_w": 11,
+    "power_w": 7,
     "status": "buying"
   },
   "home": {
-    "power_w": 247
+    "power_w": 288
   },
   "solar": {
-    "power_w": 350
+    "power_w": 374
   },
-  "updated_at": "2026-10-26T13:11:00.116293+09:00"
+  "updated_at": "2026-10-26T13:12:00.116050+09:00"
 }
