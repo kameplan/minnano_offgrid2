@@ -17,12 +17,12 @@
     "floor2": {
       "humidity": 48,
       "label": "2F",
-      "temperature": 24.8
+      "temperature": 24.7
     },
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 17.7
+      "temperature": 17.5
     }
   },
   "grid": {
@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 223
+    "power_w": 295
   },
   "solar": {
-    "power_w": 114
+    "power_w": 117
   },
-  "updated_at": "2026-10-30T16:21:00.116237+09:00"
+  "updated_at": "2026-10-30T16:22:00.116334+09:00"
 }
