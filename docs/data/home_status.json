@@ -1,7 +1,7 @@
 {
   "battery": {
     "remaining_kwh": 0,
-    "soc_percent": 44
+    "soc_percent": 46
   },
   "climate": {
     "attic": {
@@ -12,7 +12,7 @@
     "floor1": {
       "humidity": 51,
       "label": "1F",
-      "temperature": 24.9
+      "temperature": 25
     },
     "floor2": {
       "humidity": 49,
@@ -22,7 +22,7 @@
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 20
+      "temperature": 20.3
     }
   },
   "grid": {
@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 1395
+    "power_w": 1412
   },
   "solar": {
-    "power_w": 3240
+    "power_w": 3236
   },
-  "updated_at": "2026-10-31T10:41:00.116572+09:00"
+  "updated_at": "2026-10-31T10:42:00.116717+09:00"
 }
