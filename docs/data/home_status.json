@@ -12,10 +12,10 @@
     "floor1": {
       "humidity": 50,
       "label": "1F",
-      "temperature": 25.3
+      "temperature": 25.2
     },
     "floor2": {
-      "humidity": 52,
+      "humidity": 53,
       "label": "2F",
       "temperature": 26.8
     },
@@ -35,5 +35,5 @@
   "solar": {
     "power_w": 0
   },
-  "updated_at": "2026-11-07T05:08:00.430170+09:00"
+  "updated_at": "2026-11-07T05:09:00.430136+09:00"
 }
