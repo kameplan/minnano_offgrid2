@@ -22,7 +22,7 @@
     "outdoor": {
       "humidity": 0,
       "label": "外気",
-      "temperature": 11.6
+      "temperature": 11.7
     }
   },
   "grid": {
@@ -30,10 +30,10 @@
     "status": "buying"
   },
   "home": {
-    "power_w": 290
+    "power_w": 291
   },
   "solar": {
     "power_w": 0
   },
-  "updated_at": "2026-11-08T04:28:00.431130+09:00"
+  "updated_at": "2026-11-08T04:29:00.428956+09:00"
 }
